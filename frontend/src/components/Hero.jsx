@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Globe, Sparkles } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -8,9 +8,16 @@ import Navbar from "./Navbar";
 
 const Hero = () => {
   const containerRef = useRef(null);
-
-  // Page-load entrance animation -> hero sabse pehle dikhta hai isliye
-  // scroll-trigger nahi, seedha mount pe chalega
+  const imageRef = useRef(null);
+    useEffect(() => {
+    gsap.to(imageRef.current, {
+      y: -10,
+      duration: 1,
+      ease: "power1.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
+  }, []);
   useGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -68,6 +75,7 @@ const Hero = () => {
     ">
           <div className="relative borde-2 border-green-600">
             <img
+              ref={imageRef}
               src={profile.photo}
               alt={`${profile.firstName} ${profile.lastName}`}
               className="absolute left-[24%]"
