@@ -27,6 +27,7 @@ const Contact = () => {
       const res = await sendContactMessage(form);
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
+
     } catch (err) {
       setStatus({
         state: "error",
