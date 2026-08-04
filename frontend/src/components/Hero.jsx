@@ -78,7 +78,7 @@ const Hero = () => {
               ref={imageRef}
               src={profile.photo}
               alt={`${profile.firstName} ${profile.lastName}`}
-              className="absolute lg:top-[-50px] lg:left-[24%] hero-img md:top-[70px] sm:top-[80px]"
+              className="absolute lg:top-[-50px] lg:left-[24%] md:rigth-[10%] hero-img md:top-[70px] sm:top-[80px]"
             />
           </div>
         </div>
@@ -182,12 +182,12 @@ const Hero = () => {
       md:left-0
       md:bottom-6
       lg:bottom-0
-      web-developer
       "
         >
           <div className="">
-            <p
-              className="
+            <div className="">
+              <p
+                className="
         hero-item
         font-script
         text-2xl
@@ -197,12 +197,12 @@ const Hero = () => {
         mb-1
         md:bottom-[30%]
         "
-            >
-              {profile.greeting}
-            </p>
+              >
+                {profile.greeting}
+              </p>
 
-            <h2
-              className="
+              <h2
+                className="
         hero-item
         font-display
         text-4xl
@@ -213,14 +213,14 @@ const Hero = () => {
         text-white
         mb-4
         "
-            >
-              {profile.firstName}
-              <br />
-              {profile.lastName}
-            </h2>
+              >
+                {profile.firstName}
+                <br />
+                {profile.lastName}
+              </h2>
 
-            <p
-              className="
+              <p
+                className="
         hero-item
         text-brand-red
         font-bold
@@ -230,11 +230,13 @@ const Hero = () => {
         tracking-wide
         mb-4
         "
-            >
-              {profile.role}
-            </p>
+              >
+                {profile.role}
+              </p>
+            </div>
 
-            <p
+            <div className="">
+              <p
               className="
         hero-item
         text-gray-400
@@ -263,6 +265,7 @@ const Hero = () => {
             >
               <Globe size={14} className="text-brand-red" />
               {profile.availability}
+            </div>
             </div>
           </div>
         </div>
