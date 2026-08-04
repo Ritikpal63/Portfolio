@@ -34,7 +34,7 @@ export const projects = [
     category: "Real Estate WEBSITE",
     image:
       "/assets/img/Real-Estate.jpeg",
-    link: "https://github.com/Ritikpal63/Real-Estate.git",
+    link: "https://real-estate-sand-five.vercel.app/",
   },
   {
     number: "03",
