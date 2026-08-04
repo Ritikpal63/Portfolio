@@ -9,7 +9,7 @@ import Navbar from "./Navbar";
 const Hero = () => {
   const containerRef = useRef(null);
   const imageRef = useRef(null);
-    useEffect(() => {
+  useEffect(() => {
     gsap.to(imageRef.current, {
       y: -10,
       duration: 1,
@@ -38,7 +38,7 @@ const Hero = () => {
     >
       <Navbar />
 
-      <div className="relative min-h-[580px] sm:min-h-[650px] md:min-h-[720px] lg:min-h-[780px]">
+      <div className="relative min-h-[45px] sm:min-h-[650px] md:min-h-[720px] lg:min-h-[780px]">
         {/* Giant background heading */}
         <h1
           aria-hidden="true"
@@ -64,6 +64,7 @@ const Hero = () => {
       lg:text-[13vw]
       [transform:scaleY(2.8)]
       lg:[transform:scaleY(3)]
+      portfolio
       "
         >
           PORTFOLIO
@@ -71,14 +72,13 @@ const Hero = () => {
 
         {/* Portrait */}
 
-        <div className="
-    ">
-          <div className="relative borde-2 border-green-600">
+        <div className="">
+          <div className="relative">
             <img
               ref={imageRef}
               src={profile.photo}
               alt={`${profile.firstName} ${profile.lastName}`}
-              className="absolute left-[24%]"
+              className="absolute lg:top-[-50px] lg:left-[24%] hero-img md:top-[70px] sm:top-[80px]"
             />
           </div>
         </div>
@@ -96,6 +96,7 @@ const Hero = () => {
       bottom-6
       xl:bottom-0
       z-20
+      stats
       "
         >
           {stats.map((s) => (
@@ -181,10 +182,12 @@ const Hero = () => {
       md:left-0
       md:bottom-6
       lg:bottom-0
+      web-developer
       "
         >
-          <p
-            className="
+          <div className="">
+            <p
+              className="
         hero-item
         font-script
         text-2xl
@@ -192,13 +195,14 @@ const Hero = () => {
         md:text-4xl
         text-white
         mb-1
+        md:bottom-[30%]
         "
-          >
-            {profile.greeting}
-          </p>
+            >
+              {profile.greeting}
+            </p>
 
-          <h2
-            className="
+            <h2
+              className="
         hero-item
         font-display
         text-4xl
@@ -209,14 +213,14 @@ const Hero = () => {
         text-white
         mb-4
         "
-          >
-            {profile.firstName}
-            <br />
-            {profile.lastName}
-          </h2>
+            >
+              {profile.firstName}
+              <br />
+              {profile.lastName}
+            </h2>
 
-          <p
-            className="
+            <p
+              className="
         hero-item
         text-brand-red
         font-bold
@@ -226,12 +230,12 @@ const Hero = () => {
         tracking-wide
         mb-4
         "
-          >
-            {profile.role}
-          </p>
+            >
+              {profile.role}
+            </p>
 
-          <p
-            className="
+            <p
+              className="
         hero-item
         text-gray-400
         text-sm
@@ -241,12 +245,12 @@ const Hero = () => {
         max-w-[320px]
         sm:max-w-sm
         "
-          >
-            {profile.description}
-          </p>
+            >
+              {profile.description}
+            </p>
 
-          <div
-            className="
+            <div
+              className="
         hero-item
         flex
         items-center
@@ -256,9 +260,10 @@ const Hero = () => {
         text-gray-300
         tracking-wide
         "
-          >
-            <Globe size={14} className="text-brand-red" />
-            {profile.availability}
+            >
+              <Globe size={14} className="text-brand-red" />
+              {profile.availability}
+            </div>
           </div>
         </div>
       </div>

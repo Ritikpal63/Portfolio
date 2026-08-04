@@ -49,3 +49,23 @@ body {
     scroll-behavior: auto !important;
   }
 }
+@media (max-width:1280px) {
+  .stats{
+    bottom: 15%;
+  }
+}
+@media (max-width:1024px) {
+  .stats{
+    visibility: hidden;
+  }
+}
+@media (max-width:640px) {
+  .hero-img{
+    top: 40px;
+  }
+}
+@media (max-width:768px) {
+  .web-developer{
+    top:0px
+  }
+}
