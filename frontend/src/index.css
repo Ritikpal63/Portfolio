@@ -75,8 +75,7 @@ body {
   }
 } */
 
-
-@media (max-width: 420px) and (min-width: 300px) {
+@media (max-width: 470px) and (min-width: 300px) {
   .hero-img {
     left: 25%;
   }
@@ -90,11 +89,11 @@ body {
     left: 4px;
     padding-bottom: -10px;
   }
-  .greeting::after{
+  /* .greeting::after {
     content: "Web Developer & Designer";
     color: red;
     margin-top: -10px;
-  }
+  } */
   .portfolio {
     top: -5%;
     font-size: 60px;
@@ -110,7 +109,7 @@ body {
   .availableBadge {
     display: none;
   }
-  .tagBottom{
+  .tagBottom {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -119,5 +118,11 @@ body {
     left: 0;
     position: absolute;
   }
-} 
+}
 
+@media (max-width: 1023px) and (min-width: 768px) {
+  .hero-img {
+    position: absolute;
+    left: 28%;
+  }
+}
