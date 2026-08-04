@@ -26,7 +26,7 @@ export const projects = [
     category: "NEWS WEBSITE",
     image:
       "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80",
-    link: "https://github.com/Ritikpal63/NewsApp.git",
+    link: "https://news-app-eta-umber.vercel.app/",
   },
   {
     number: "02",
