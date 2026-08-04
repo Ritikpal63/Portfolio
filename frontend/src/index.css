@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-base-black text-white font-body;
+  overflow-x: hidden;
+}
+
+/* thin custom scrollbar - dark theme ke saath match karta hai */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #dc1f2e;
+  border-radius: 10px;
+}
+
+/* Reusable utility classes */
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 md:px-10;
+  }
+
+  .eyebrow {
+    @apply text-brand-red text-xs md:text-sm font-bold tracking-[0.2em] uppercase;
+  }
+
+  .pill {
+    @apply border border-base-border text-xs md:text-sm px-4 py-2 rounded-full text-gray-300 hover:border-brand-red hover:text-white transition-colors duration-300;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
