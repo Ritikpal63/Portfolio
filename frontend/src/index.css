@@ -74,6 +74,8 @@ body {
     right:-10%;
   }
 } */
+
+
 @media (max-width: 420px) and (min-width: 300px) {
   .hero-img {
     left: 25%;
@@ -95,6 +97,9 @@ body {
   }
   .portfolio {
     top: -5%;
+    font-size: 60px;
+    transform: scaleY(3);
+    position: absolute;
   }
   .role {
     top: -12%;
@@ -114,4 +119,5 @@ body {
     left: 0;
     position: absolute;
   }
-}
+} 
+
