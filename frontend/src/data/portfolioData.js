@@ -9,7 +9,7 @@ export const profile = {
   description:
     "I design and build stylish, user-focused web experiences that combine creativity with strategy. Passionate about clean design, smooth interactions, and details that make a difference.",
   availability: "AVAILABLE WORLDWIDE",
-  photo: "https://i.pravatar.cc/600?img=13",
+  photo: "/assets/img/portfolio.png",
   quoteBubble: "Turning ideas into powerful digital experiences.",
 };
 
