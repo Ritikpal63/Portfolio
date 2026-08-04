@@ -9,7 +9,7 @@ const Navbar = () => {
           <div className="text-brand-red">{profile.tagTop}</div>
           <div>{profile.tagBottom}</div>
         </div>
-        <div className="flex lg:gap-4 md:gap-2 sm:gap-1 items-center">
+        <div className="flex lg:gap-4 md:gap-2 sm:gap-1 items-center availableBadge">
           {profile.availableBadge}
           <Sparkles size={14} className="text-brand-red" />
         </div>

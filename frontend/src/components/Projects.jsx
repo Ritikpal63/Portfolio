@@ -6,7 +6,7 @@ const Projects = () => {
   const containerRef = useScrollReveal(".reveal-item");
 
   return (
-    <section id="projects" className="md:py-[100px] border-b border-base-border">
+    <section id="projects" className="py-[50px] md:py-[100px] border-b border-base-border">
       <div ref={containerRef} className="section-container">
         <div className="reveal-item flex items-center justify-between mb-10 pb-6 border-b border-base-border">
           <h2 className="font-display text-2xl md:text-3xl">SELECTED PROJECTS</h2>

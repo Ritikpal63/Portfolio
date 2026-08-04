@@ -185,7 +185,7 @@ const Hero = () => {
       "
         >
           <div className="">
-            <div className="">
+            <div className="greeting">
               <p
                 className="
         hero-item
@@ -219,8 +219,10 @@ const Hero = () => {
                 {profile.lastName}
               </h2>
 
-              <p
-                className="
+
+            </div>
+            <p
+              className="
         hero-item
         text-brand-red
         font-bold
@@ -229,15 +231,14 @@ const Hero = () => {
         md:text-base
         tracking-wide
         mb-4
+        role
         "
-              >
-                {profile.role}
-              </p>
-            </div>
-
-            <div className="">
+            >
+              {profile.role}
+            </p>
+            <div className="description">
               <p
-              className="
+                className="
         hero-item
         text-gray-400
         text-sm
@@ -245,14 +246,14 @@ const Hero = () => {
         leading-relaxed
         mb-6
         max-w-[320px]
-        sm:max-w-sm
+        sm:max-w-sm 
         "
-            >
-              {profile.description}
-            </p>
+              >
+                {profile.description}
+              </p>
 
-            <div
-              className="
+              <div
+                className="
         hero-item
         flex
         items-center
@@ -262,10 +263,10 @@ const Hero = () => {
         text-gray-300
         tracking-wide
         "
-            >
-              <Globe size={14} className="text-brand-red" />
-              {profile.availability}
-            </div>
+              >
+                <Globe size={14} className="text-brand-red" />
+                {profile.availability}
+              </div>
             </div>
           </div>
         </div>

@@ -74,3 +74,31 @@ body {
     right:-10%;
   }
 } */
+ @media (max-width:420px) and (min-width:300px){
+  .hero-img{
+    left:25%;
+  }
+  .description{
+    visibility: hidden;
+  }
+  .greeting{
+    bottom:-40%;
+    gap: 0;
+    position: absolute;
+    /* display: flex; */
+    gap: 10px;
+    /* align-items: ; */
+  }
+  .portfolio{
+    top: 8%;
+  }
+  .role{
+    top:-12%;
+    left: 5px;
+    position: absolute;
+    visibility: hidden;
+  }
+  .availableBadge{
+    gap:0;
+  }
+}
