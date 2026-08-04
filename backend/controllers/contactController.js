@@ -5,6 +5,8 @@ export const submitContact = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
+    console.log("===== Contact Request =====");
+    console.log(req.body);
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
