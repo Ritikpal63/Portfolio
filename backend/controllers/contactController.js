@@ -1,4 +1,5 @@
 import pool from "../config/db.js";
+import sendMail from "../utils/sendMail.js";
 
 export const submitContact = async (req, res) => {
   try {
@@ -21,8 +22,15 @@ export const submitContact = async (req, res) => {
 
     const [result] = await pool.query(
       "INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)",
-      [name, email, subject || null, message]
+      [name, email, subject || null, message],
     );
+
+    await sendMail({
+      name,
+      email,
+      subject,
+      message,
+    });
 
     return res.status(201).json({
       success: true,
@@ -41,7 +49,7 @@ export const submitContact = async (req, res) => {
 export const getAllMessages = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM contact_messages ORDER BY created_at DESC"
+      "SELECT * FROM contact_messages ORDER BY created_at DESC",
     );
     return res.status(200).json({ success: true, data: rows });
   } catch (error) {

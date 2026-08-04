@@ -25,7 +25,6 @@ const Contact = () => {
     setStatus({ state: "loading", text: "" });
     try {
       const res = await sendContactMessage(form);
-      console.log("Portfolio Contact Form Data", res);
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
