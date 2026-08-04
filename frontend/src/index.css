@@ -49,13 +49,13 @@ body {
     scroll-behavior: auto !important;
   }
 }
-@media (max-width:1280px) {
-  .stats{
+@media (max-width: 1280px) {
+  .stats {
     bottom: 15%;
   }
 }
-@media (max-width:1099px) {
-  .stats{
+@media (max-width: 1099px) {
+  .stats {
     visibility: hidden;
   }
 }
@@ -74,31 +74,44 @@ body {
     right:-10%;
   }
 } */
- @media (max-width:420px) and (min-width:300px){
-  .hero-img{
-    left:25%;
+@media (max-width: 420px) and (min-width: 300px) {
+  .hero-img {
+    left: 25%;
   }
-  .description{
+  .description {
     visibility: hidden;
   }
-  .greeting{
-    bottom:-40%;
+  .greeting {
+    bottom: -35%;
     gap: 0;
     position: absolute;
-    /* display: flex; */
-    gap: 10px;
-    /* align-items: ; */
+    left: 4px;
+    padding-bottom: -10px;
   }
-  .portfolio{
-    top: 8%;
+  .greeting::after{
+    content: "Web Developer & Designer";
+    color: red;
+    margin-top: -10px;
   }
-  .role{
-    top:-12%;
+  .portfolio {
+    top: -5%;
+  }
+  .role {
+    top: -12%;
     left: 5px;
     position: absolute;
     visibility: hidden;
   }
-  .availableBadge{
-    gap:0;
+  .availableBadge {
+    display: none;
+  }
+  .tagBottom{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    bottom: 5%;
+    display: none;
+    left: 0;
+    position: absolute;
   }
 }

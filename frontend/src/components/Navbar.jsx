@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <header className="px-[5%] relative z-30 pt-8">
       <div className="flex justify-between items-start">
-        <div>
+        <div className="tagBottom">
           <div className="text-brand-red">{profile.tagTop}</div>
           <div>{profile.tagBottom}</div>
         </div>
