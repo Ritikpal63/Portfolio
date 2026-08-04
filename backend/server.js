@@ -8,16 +8,16 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors({
-  origin: [
-    "http://localhost:5174",
-    "https://portfolio-eta-three-63.vercel.app"
-  ],
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-app.options("*", cors());
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 // Routes
