@@ -35,7 +35,7 @@ const Contact = () => {
       //   "https://portfolio-0wx4.onrender.com/api/contact",
       //   form,
       // );
-      console.log("API data", res.data);
+      console.log("API data", res.data.data);
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
