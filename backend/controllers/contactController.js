@@ -27,12 +27,21 @@ export const submitContact = async (req, res) => {
       [name, email, subject || null, message],
     );
 
-    await sendMail({
-      name,
-      email,
-      subject,
-      message,
-    });
+    try {
+      await sendMail({
+        name,
+        email,
+        subject,
+        message,
+      });
+    } catch (emailError) {
+      console.error("Email send failed:", emailError);
+      return res.status(201).json({
+        success: true,
+        message: "Message saved successfully, but email notification failed.",
+        id: result.insertId,
+      });
+    }
 
     return res.status(201).json({
       success: true,

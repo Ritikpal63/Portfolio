@@ -3,6 +3,7 @@ import { Mail, Globe, Phone, MapPin, ArrowRight } from "lucide-react";
 import { contact } from "../data/portfolioData";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { sendContactMessage } from "../api/contact";
+import axios from "axios";
 
 const contactItems = [
   { icon: Mail, label: "email" },
@@ -13,7 +14,12 @@ const contactItems = [
 
 const Contact = () => {
   const containerRef = useScrollReveal(".reveal-item");
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [status, setStatus] = useState({ state: "idle", text: "" });
 
   const handleChange = (e) => {
@@ -25,20 +31,28 @@ const Contact = () => {
     setStatus({ state: "loading", text: "" });
     try {
       const res = await sendContactMessage(form);
+      // const res = await axios.post(
+      //   "https://portfolio-0wx4.onrender.com/api/contact",
+      //   form,
+      // );
+      console.log("API data", res.data);
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
-
     } catch (err) {
       setStatus({
         state: "error",
-        text: err.response?.data?.message || "Kuch galat ho gaya, dobara try karo",
+        text:
+          err.response?.data?.message || "Kuch galat ho gaya, dobara try karo",
       });
     }
   };
 
   return (
     <section id="contact" className="py-20 md:py-28">
-      <div ref={containerRef} className="section-container grid lg:grid-cols-2 gap-14 items-start">
+      <div
+        ref={containerRef}
+        className="section-container grid lg:grid-cols-2 gap-14 items-start"
+      >
         {/* Left: heading + contact details + form */}
         <div>
           <h2 className="reveal-item font-display text-3xl md:text-4xl mb-4">
@@ -50,7 +64,10 @@ const Contact = () => {
 
           <div className="reveal-item space-y-4 mb-8">
             {contactItems.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-3 text-sm text-gray-300">
+              <div
+                key={label}
+                className="flex items-center gap-3 text-sm text-gray-300"
+              >
                 <span className="w-9 h-9 rounded-full border border-base-border flex items-center justify-center shrink-0">
                   <Icon size={15} className="text-brand-red" />
                 </span>

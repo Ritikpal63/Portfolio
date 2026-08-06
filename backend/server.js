@@ -8,16 +8,16 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: process.env.CLIENT_URL,
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-app.options("*", cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // Routes

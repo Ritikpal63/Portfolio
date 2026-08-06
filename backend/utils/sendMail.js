@@ -3,21 +3,33 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, "");
+
+if (!EMAIL_USER || !EMAIL_PASS) {
+  console.error("SMTP config missing EMAIL_USER or EMAIL_PASS.");
+}
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
 
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 
   tls: {
-    rejectUnauthorized: false,
+    servername: "smtp.gmail.com",
   },
-
-  dns: "ipv4",
+});
+transporter.verify((error, success) => {
+  if (error) {
+    console.log("SMTP Error:", error);
+  } else {
+    console.log("SMTP Ready");
+  }
 });
 
 const sendMail = async ({ name, email, subject, message }) => {
