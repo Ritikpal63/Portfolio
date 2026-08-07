@@ -1,8 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import dns from "node:dns";
-
+import dns from "node:dns/promises";
 import contactRoutes from "./routes/contactRoutes.js";
 
 dns.setDefaultResultOrder("ipv4first");
@@ -48,6 +47,11 @@ const corsOptions = {
 
   credentials: true,
 };
+const result = await dns.lookup("smtp.gmail.com", {
+  family: 4,
+});
+
+console.log("Gmail IPv4:", result);
 
 app.use(cors(corsOptions));
 
