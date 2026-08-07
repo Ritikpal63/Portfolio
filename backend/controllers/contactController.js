@@ -7,6 +7,8 @@ export const submitContact = async (req, res) => {
 
     console.log("===== Contact Request =====");
     console.log(req.body);
+
+    // Validation
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
@@ -14,34 +16,35 @@ export const submitContact = async (req, res) => {
       });
     }
 
+    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        message: "Valid email daaliye",
+        message: "Please put valid email",
       });
     }
 
+    // Save message in database
     const [result] = await pool.query(
-      "INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)",
+      `INSERT INTO contact_messages
+       (name, email, subject, message)
+       VALUES (?, ?, ?, ?)`,
       [name, email, subject || null, message],
     );
 
-    try {
-      await sendMail({
-        name,
-        email,
-        subject,
-        message,
-      });
-    } catch (emailError) {
-      console.error("Email send failed:", emailError);
-      return res.status(201).json({
-        success: true,
-        message: "Message saved successfully, but email notification failed.",
-        id: result.id,
-      });
-    }
+    console.log("✅ Message saved to database");
+
+    // Send email
+    await sendMail({
+      name,
+      email,
+      subject,
+      message,
+    });
+
+    console.log("✅ Email sent successfully");
 
     return res.status(201).json({
       success: true,
@@ -49,10 +52,11 @@ export const submitContact = async (req, res) => {
       id: result.insertId,
     });
   } catch (error) {
-    console.error("submitContact error:", error.message);
+    console.error("❌ submitContact error:", error);
+
     return res.status(500).json({
       success: false,
-      message: "Server error, thodi der baad try karo",
+      message: "Message send nahi ho paya. Please try again.",
     });
   }
 };
@@ -60,11 +64,20 @@ export const submitContact = async (req, res) => {
 export const getAllMessages = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM contact_messages ORDER BY created_at DESC",
+      `SELECT * 
+       FROM contact_messages 
+       ORDER BY created_at DESC`,
     );
-    return res.status(200).json({ success: true, data: rows });
+    return res.status(200).json({
+      success: true,
+      data: rows,
+    });
   } catch (error) {
-    console.error("getAllMessages error:", error.message);
-    return res.status(500).json({ success: false, message: "Server error" });
+    console.error("❌ getAllMessages error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };

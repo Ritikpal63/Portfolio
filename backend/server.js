@@ -3,27 +3,19 @@ import cors from "cors";
 import dotenv from "dotenv";
 import dns from "node:dns";
 import contactRoutes from "./routes/contactRoutes.js";
-
-// Render (and some other hosts) resolve outgoing hostnames to an IPv6 address
-// first, but don't have working outbound IPv6 routing — this causes
-// ENETUNREACH on things like Gmail SMTP. Force IPv4 first to avoid that.
 dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config();
 
 const app = express();
 
-// Middlewares
-// CLIENT_URL can be a single URL or a comma-separated list
-// e.g. CLIENT_URL=https://portfolio-eta-three-63.vercel.app,http://localhost:5174
 const allowedOrigins = (process.env.CLIENT_URL || "")
   .split(",")
-  .map((origin) => origin.trim().replace(/\/$/, "")) // trim + remove trailing slash
+  .map((origin) => origin.trim().replace(/\/$/, "")) 
   .filter(Boolean);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // allow server-to-server / curl / Postman requests (no Origin header)
     if (!origin) return callback(null, true);
 
     const normalizedOrigin = origin.replace(/\/$/, "");
@@ -47,10 +39,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// app.options(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/contact", contactRoutes);
 
 app.get("/", (req, res) => {
