@@ -8,8 +8,7 @@ const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  // TiDB Cloud Serverless normally uses port 4000, NOT the MySQL default 3306.
-  // Double check the "Connect" panel on TiDB Cloud for the exact port.
+
   port: Number(process.env.DB_PORT) || 4000,
   waitForConnections: true,
   connectionLimit: 10,

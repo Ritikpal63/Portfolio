@@ -9,7 +9,7 @@ const app = express();
 
 // Middlewares
 // CLIENT_URL can be a single URL or a comma-separated list
-// e.g. CLIENT_URL=https://portfolio-eta-three-63.vercel.app,http://localhost:5174
+// e.g. CLIENT_URL=https://portfolio-git-main-ritik63-webs-projects.vercel.app,http://localhost:5174
 const allowedOrigins = (process.env.CLIENT_URL || "")
   .split(",")
   .map((origin) => origin.trim().replace(/\/$/, "")) // trim + remove trailing slash
