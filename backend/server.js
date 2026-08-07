@@ -49,11 +49,7 @@ const corsOptions = {
 
   credentials: true,
 };
-const result = await dns.lookup("smtp.gmail.com", {
-  family: 4,
-});
 
-console.log("Gmail IPv4:", result);
 
 app.use(cors(corsOptions));
 
