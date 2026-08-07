@@ -1,10 +1,12 @@
+import dns from "node:dns/promises";
+dns.setDefaultResultOrder("ipv4first");
+
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import dns from "node:dns/promises";
 import contactRoutes from "./routes/contactRoutes.js";
 
-dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config();
 
