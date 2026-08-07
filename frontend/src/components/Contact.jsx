@@ -3,7 +3,6 @@ import { Mail, Globe, Phone, MapPin, ArrowRight } from "lucide-react";
 import { contact } from "../data/portfolioData";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { sendContactMessage } from "../api/contact";
-import axios from "axios";
 
 const contactItems = [
   { icon: Mail, label: "email" },
@@ -31,11 +30,6 @@ const Contact = () => {
     setStatus({ state: "loading", text: "" });
     try {
       const res = await sendContactMessage(form);
-      // const res = await axios.post(
-      //   "https://portfolio-0wx4.onrender.com/api/contact",
-      //   form,
-      // );
-      console.log("API data", res.data.data);
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
