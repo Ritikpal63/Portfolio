@@ -30,6 +30,7 @@ const Contact = () => {
     setStatus({ state: "loading", text: "" });
     try {
       const res = await sendContactMessage(form);
+      console.log("API Data", res.data)
       setStatus({ state: "success", text: res.message });
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {

@@ -1,9 +1,9 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import dns from "node:dns"
+import dns from "node:dns";
 
 dotenv.config();
-dns.setDefaultResultOrder("ipv4first")
+dns.setDefaultResultOrder("ipv4first");
 
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, "");
@@ -17,7 +17,7 @@ if (!EMAIL_PASS) {
 }
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "74.220.56.10",
   port: 587,
   secure: false,
   family: 4,
@@ -33,7 +33,8 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify SMTP connection
-transporter.verify()
+transporter
+  .verify()
   .then(() => {
     console.log("✅ SMTP Ready");
   })
@@ -41,17 +42,8 @@ transporter.verify()
     console.error("❌ SMTP Error:", error.message);
   });
 
-
-const sendMail = async ({
-  name,
-  email,
-  subject,
-  message,
-}) => {
-
-  const normalizedSubject =
-    subject?.trim() || "New contact message";
-
+const sendMail = async ({ name, email, subject, message }) => {
+  const normalizedSubject = subject?.trim() || "New contact message";
 
   // Email received by portfolio owner
   const htmlMessage = `
@@ -76,7 +68,6 @@ const sendMail = async ({
     <p>${message}</p>
   `;
 
-
   // Confirmation email to visitor
   const replyMessage = `
     <h2>Hi ${name},</h2>
@@ -95,7 +86,6 @@ const sendMail = async ({
     <p><strong>Ritik Pal</strong></p>
   `;
 
-
   // 1️⃣ Send message to portfolio owner
   await transporter.sendMail({
     from: `"Portfolio Contact" <${EMAIL_USER}>`,
@@ -105,7 +95,6 @@ const sendMail = async ({
     html: htmlMessage,
   });
 
-
   // 2️⃣ Send confirmation to visitor
   await transporter.sendMail({
     from: `"Ritik Pal Portfolio" <${EMAIL_USER}>`,
@@ -114,10 +103,7 @@ const sendMail = async ({
     html: replyMessage,
   });
 
-
   console.log("✅ Both emails sent successfully");
 };
 
-
 export default sendMail;
-
