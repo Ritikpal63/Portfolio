@@ -8,11 +8,15 @@ const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
+  // TiDB Cloud Serverless normally uses port 4000, NOT the MySQL default 3306.
+  // Double check the "Connect" panel on TiDB Cloud for the exact port.
+  port: Number(process.env.DB_PORT) || 4000,
   waitForConnections: true,
   connectionLimit: 10,
+  connectTimeout: 20000,
   ssl: {
     minVersion: "TLSv1.2",
+    rejectUnauthorized: true,
   },
 };
 
@@ -27,6 +31,10 @@ pool
   })
   .catch((err) => {
     console.error("❌ MySQL connection failed:", err.message);
+    console.error(
+      "   Check: DB_HOST/DB_USER/DB_PASSWORD/DB_NAME/DB_PORT env vars on Render, " +
+        "and that TiDB Cloud's IP Access List allows 0.0.0.0/0 (Render has no static IP).",
+    );
   });
 
 export default pool;
