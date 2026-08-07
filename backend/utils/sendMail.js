@@ -1,7 +1,9 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import dns from "node:dns"
 
 dotenv.config();
+dns.setDefaultResultOrder("ipv4first")
 
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, "");
