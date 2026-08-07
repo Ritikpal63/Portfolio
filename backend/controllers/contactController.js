@@ -89,7 +89,7 @@ export const submitContact = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Message couldn't be sent",
+      message: error.message,
     });
   }
 };
