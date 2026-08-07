@@ -7,14 +7,13 @@ const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, "");
 
 if (!EMAIL_USER) {
-  console.error("❌ EMAIL_USER is missing.");
+  console.error("❌ EMAIL_USER is missing");
 }
 
 if (!EMAIL_PASS) {
-  console.error("❌ EMAIL_PASS is missing.");
+  console.error("❌ EMAIL_PASS is missing");
 }
 
-// Gmail SMTP transporter
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
@@ -31,14 +30,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Check SMTP connection
-transporter.verify((error) => {
-  if (error) {
-    console.error("❌ SMTP Error:", error);
-  } else {
+// Verify SMTP connection
+transporter.verify()
+  .then(() => {
     console.log("✅ SMTP Ready");
-  }
-});
+  })
+  .catch((error) => {
+    console.error("❌ SMTP Error:", error.message);
+  });
 
 
 const sendMail = async ({
@@ -49,10 +48,10 @@ const sendMail = async ({
 }) => {
 
   const normalizedSubject =
-    subject || "New contact message";
+    subject?.trim() || "New contact message";
 
 
-  // Email to you
+  // Email received by portfolio owner
   const htmlMessage = `
     <h2>Someone contacted you</h2>
 
@@ -91,12 +90,11 @@ const sendMail = async ({
     <br />
 
     <p>Regards,</p>
-
-    <p>Ritik Pal</p>
+    <p><strong>Ritik Pal</strong></p>
   `;
 
 
-  // Send email to yourself
+  // 1️⃣ Send message to portfolio owner
   await transporter.sendMail({
     from: `"Portfolio Contact" <${EMAIL_USER}>`,
     to: EMAIL_USER,
@@ -106,7 +104,7 @@ const sendMail = async ({
   });
 
 
-  // Send confirmation email to visitor
+  // 2️⃣ Send confirmation to visitor
   await transporter.sendMail({
     from: `"Ritik Pal Portfolio" <${EMAIL_USER}>`,
     to: email,
@@ -114,6 +112,8 @@ const sendMail = async ({
     html: replyMessage,
   });
 
+
+  console.log("✅ Both emails sent successfully");
 };
 
 

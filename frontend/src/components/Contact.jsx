@@ -36,7 +36,7 @@ const Contact = () => {
       setStatus({
         state: "error",
         text:
-          err.response?.data?.message || "Kuch galat ho gaya, dobara try karo",
+          err.response?.data?.message || "Try again",
       });
     }
   };
