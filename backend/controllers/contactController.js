@@ -39,7 +39,7 @@ export const submitContact = async (req, res) => {
       return res.status(201).json({
         success: true,
         message: "Message saved successfully, but email notification failed.",
-        id: result.insertId,
+        id: result.id,
       });
     }
 

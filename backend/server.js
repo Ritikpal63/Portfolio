@@ -1,7 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import dns from "node:dns";
 import contactRoutes from "./routes/contactRoutes.js";
+
+// Render (and some other hosts) resolve outgoing hostnames to an IPv6 address
+// first, but don't have working outbound IPv6 routing — this causes
+// ENETUNREACH on things like Gmail SMTP. Force IPv4 first to avoid that.
+dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config();
 
@@ -9,7 +15,7 @@ const app = express();
 
 // Middlewares
 // CLIENT_URL can be a single URL or a comma-separated list
-// e.g. CLIENT_URL=https://portfolio-git-main-ritik63-webs-projects.vercel.app,http://localhost:5174
+// e.g. CLIENT_URL=https://portfolio-eta-three-63.vercel.app,http://localhost:5174
 const allowedOrigins = (process.env.CLIENT_URL || "")
   .split(",")
   .map((origin) => origin.trim().replace(/\/$/, "")) // trim + remove trailing slash
@@ -22,11 +28,16 @@ const corsOptions = {
 
     const normalizedOrigin = origin.replace(/\/$/, "");
 
-    if (allowedOrigins.length === 0 || allowedOrigins.includes(normalizedOrigin)) {
+    if (
+      allowedOrigins.length === 0 ||
+      allowedOrigins.includes(normalizedOrigin)
+    ) {
       return callback(null, true);
     }
 
-    console.warn(`❌ Blocked by CORS: ${origin} (allowed: ${allowedOrigins.join(", ") || "none set"})`);
+    console.warn(
+      `❌ Blocked by CORS: ${origin} (allowed: ${allowedOrigins.join(", ") || "none set"})`,
+    );
     return callback(new Error("Not allowed by CORS"));
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
