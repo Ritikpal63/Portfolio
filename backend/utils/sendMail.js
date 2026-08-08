@@ -1,9 +1,7 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import dns from "node:dns/promises";
 
 dotenv.config();
-dns.setDefaultResultOrder("ipv4first");
 
 const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, "");
@@ -15,16 +13,13 @@ if (!EMAIL_USER) {
 if (!EMAIL_PASS) {
   console.error("❌ EMAIL_PASS is missing");
 }
-const result = await dns.lookup("smtp.gmail.com", {
-  family: 4,
-});
-
-console.log("Gmail IPv4:", result);
 
 const transporter = nodemailer.createTransport({
-  host: "142.250.107.108",
+  host: "smtp.gmail.com",
   port: 587,
   secure: false,
+
+  // Prefer IPv4 because Render previously had IPv6 connectivity issues
   family: 4,
 
   auth: {
@@ -34,23 +29,18 @@ const transporter = nodemailer.createTransport({
 
   tls: {
     servername: "smtp.gmail.com",
+    minVersion: "TLSv1.2",
   },
+
+  connectionTimeout: 20000,
+  greetingTimeout: 20000,
+  socketTimeout: 30000,
 });
 
-// Verify SMTP connection
-transporter
-  .verify()
-  .then(() => {
-    console.log("✅ SMTP Ready");
-  })
-  .catch((error) => {
-    console.error("❌ SMTP Error:", error.message);
-  });
-
 const sendMail = async ({ name, email, subject, message }) => {
-  const normalizedSubject = subject?.trim() || "New contact message";
+  const normalizedSubject =
+    subject?.trim() || "New contact message";
 
-  // Email received by portfolio owner
   const htmlMessage = `
     <h2>Someone contacted you</h2>
 
@@ -73,7 +63,6 @@ const sendMail = async ({ name, email, subject, message }) => {
     <p>${message}</p>
   `;
 
-  // Confirmation email to visitor
   const replyMessage = `
     <h2>Hi ${name},</h2>
 
@@ -91,7 +80,7 @@ const sendMail = async ({ name, email, subject, message }) => {
     <p><strong>Ritik Pal</strong></p>
   `;
 
-  // 1️⃣ Send message to portfolio owner
+  // Email to portfolio owner
   await transporter.sendMail({
     from: `"Portfolio Contact" <${EMAIL_USER}>`,
     to: EMAIL_USER,
@@ -100,7 +89,7 @@ const sendMail = async ({ name, email, subject, message }) => {
     html: htmlMessage,
   });
 
-  // 2️⃣ Send confirmation to visitor
+  // Auto-reply to visitor
   await transporter.sendMail({
     from: `"Ritik Pal Portfolio" <${EMAIL_USER}>`,
     to: email,

@@ -1,20 +1,13 @@
-import dns from "node:dns/promises";
-dns.setDefaultResultOrder("ipv4first");
-
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import contactRoutes from "./routes/contactRoutes.js";
 
+import contactRoutes from "./routes/contactRoutes.js";
+import { testDBConnection } from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
-
-/* =========================
-   CORS
-========================= */
 
 const allowedOrigins = (process.env.CLIENT_URL || "")
   .split(",")
@@ -23,8 +16,6 @@ const allowedOrigins = (process.env.CLIENT_URL || "")
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests without Origin
-    // (Postman, curl, server-to-server)
     if (!origin) {
       return callback(null, true);
     }
@@ -50,20 +41,10 @@ const corsOptions = {
   credentials: true,
 };
 
-
 app.use(cors(corsOptions));
-
 app.options("*", cors(corsOptions));
 
-/* =========================
-   Middleware
-========================= */
-
 app.use(express.json());
-
-/* =========================
-   Routes
-========================= */
 
 app.use("/api/contact", contactRoutes);
 
@@ -71,18 +52,30 @@ app.get("/", (req, res) => {
   res.send("Portfolio backend is running 🚀");
 });
 
-/* =========================
-   Server
-========================= */
-
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+const startServer = async () => {
+  console.log("🔄 Checking database connection...");
 
-  console.log(
-    `Allowed CORS origins: ${
-      allowedOrigins.length ? allowedOrigins.join(", ") : "⚠️ none set"
-    }`,
-  );
-});
+  const dbConnected = await testDBConnection();
+
+  if (!dbConnected) {
+    console.error("❌ Database connection failed.");
+    console.error("❌ Server will not start.");
+    process.exit(1);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+
+    console.log(
+      `Allowed CORS origins: ${
+        allowedOrigins.length
+          ? allowedOrigins.join(", ")
+          : "⚠️ none set"
+      }`
+    );
+  });
+};
+
+startServer();
