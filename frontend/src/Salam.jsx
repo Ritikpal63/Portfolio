@@ -100,6 +100,7 @@ body{background:#f5f5f5}
 .admin-btn{background:#c0392b;color:#fff;border:none;padding:.75rem 1.4rem;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px}
 .admin-btn:hover{background:#a93226}
 @media(max-width:899px){.hamburger{display:block}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#111;flex-direction:column}.nav-links.open{display:flex}}
+@media(max-width:900px){.admin-home-btn{display:inline}}
 `;
 
 const INITIAL_NEWS = [
@@ -231,7 +232,16 @@ function Nav() {
             </Link>
           </li>
         </ul>
-        <Link
+        <div className="">
+          <Link
+          to="/"
+          className="admin-btn hidden admin-home-btn me-5"
+          style={{ padding: ".45rem .9rem", fontSize: ".75rem" }}
+        >
+          {" "}
+          Home
+        </Link>
+          <Link
           to="/admin"
           className="admin-btn"
           style={{ padding: ".45rem .9rem", fontSize: ".75rem" }}
@@ -239,6 +249,8 @@ function Nav() {
           {" "}
           + Upload News
         </Link>
+
+        </div>
       </div>
     </nav>
   );
@@ -455,7 +467,7 @@ function AdminLogin() {
     if (pwd === ADMIN_PASSWORD) {
       sessionStorage.setItem("sk_admin", "true");
       navigate("/admin");
-    } else alert("Galat Password!");
+    } else alert("Invalid Password!");
   };
   return (
     <div className="admin-wrap" style={{ maxWidth: 400, marginTop: "4rem" }}>
@@ -534,7 +546,7 @@ function AdminDashboard({ newsList, setNewsList }) {
     };
     const updated = [newNews, ...newsList];
     setNewsList(updated);
-    alert("News Publish ho gayi! Home page par dekho.");
+    alert("News Published");
     setForm({
       title: "",
       category: "CRIME",
@@ -547,7 +559,7 @@ function AdminDashboard({ newsList, setNewsList }) {
   };
 
   const del = (id) => {
-    if (confirm("Delete karna hai?"))
+    if (confirm("Do you want to delete?"))
       setNewsList(newsList.filter((n) => n.id !== id));
   };
 
@@ -593,7 +605,7 @@ function AdminDashboard({ newsList, setNewsList }) {
           className="admin-input"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
-          placeholder="Jaise: Pune mein bada operation..."
+          placeholder="Pune mein bada operation..."
         />
 
         <div
@@ -639,7 +651,7 @@ function AdminDashboard({ newsList, setNewsList }) {
           className="admin-input"
           value={form.image.startsWith("data:") ? "" : form.image}
           onChange={(e) => setForm({ ...form, image: e.target.value })}
-          placeholder="Ya yaha image ka URL paste karo (https://...)"
+          placeholder="Paste image link here.. (https://...)"
         />
         {filePreview && (
           <img
@@ -660,7 +672,7 @@ function AdminDashboard({ newsList, setNewsList }) {
           className="admin-input"
           value={form.excerpt}
           onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-          placeholder="2 line ka short summary"
+          placeholder="2 Line shot content"
         />
 
         <label className="admin-label">
@@ -671,7 +683,7 @@ function AdminDashboard({ newsList, setNewsList }) {
           rows="6"
           value={form.content}
           onChange={(e) => setForm({ ...form, content: e.target.value })}
-          placeholder="Pura news yaha likho... Har paragraph ke liye Enter dabao"
+          placeholder="write content here & press enter to start new paragraph"
         ></textarea>
 
         <button
