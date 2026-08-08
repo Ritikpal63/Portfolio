@@ -19,7 +19,6 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
 
-  // Prefer IPv4 because Render previously had IPv6 connectivity issues
   family: 4,
 
   auth: {
